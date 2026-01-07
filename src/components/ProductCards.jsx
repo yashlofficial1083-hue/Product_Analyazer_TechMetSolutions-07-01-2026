@@ -1,36 +1,23 @@
 import { useState } from "react";
-import currencyFormatter from 'currency-formatter';
-import DetailCard from "./DetailCard";
+// import { useNavigate } from "react-router-dom";
+import currencyFormatter from "currency-formatter";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const [count, setCount] = useState(0);
-  const [showDetail, setShowDetail] = useState(false);
+  // const navigate = useNavigate();
 
   const increment = () => setCount((q) => q + 1);
   const decrement = () => setCount((q) => Math.max(0, q - 1));
 
-  const handleCardClick = () => {
-    setShowDetail(true);
-  };
-
-  if (showDetail) {
-    return (
-      <DetailCard
-        cardData={{
-          image: product.image,
-          category: product.category,
-          title: product.title,
-          description: product.description,
-          price: product.price,
-        }}
-        onClose={() => setShowDetail(false)}
-      />
-    );
-  }
+  // const handleCardClick = () => {
+  //   navigate(`/product/${product.id}`, { state: { product } });
+  // };
 
   return (
-    <div
-      onClick={handleCardClick}
+    <Link to={`/product/${product.id}`} state={{ product }}>
+      <div
+      // onClick={handleCardClick}
       className=" max-w-[280px] flex  flex-col overflow-hidden box-border border-1 border-gray-400 rounded-3xl   bg-white shadow-sm transition-colors hover:border-blue-100 hover:shadow-md hover:scale-110 cursor-pointer"
     >
       <div className="flex h-36 items-center justify-center overflow-hidden ">
@@ -56,7 +43,7 @@ const ProductCard = ({ product }) => {
 
         <div className="flex items-center justify-between mt-[-8px]">
           <span className="text-lg font-bold text-blue-600">
-            {currencyFormatter.format(product.price, { code: 'INR' })}
+            {currencyFormatter.format(product.price, { code: "INR" })}
           </span>
         </div>
 
@@ -97,6 +84,7 @@ const ProductCard = ({ product }) => {
         )}
       </div>
     </div>
+    </Link>
   );
 };
 
